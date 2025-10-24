@@ -57,3 +57,25 @@
 ::-webkit-scrollbar-thumb:hover {
   background-color: #cccccc;
 }
+
+/* Expandable lyrics styles */
+.aplayer .aplayer-lrc {
+  cursor: pointer;
+  transition: height 0.3s ease, max-height 0.3s ease;
+}
+
+.aplayer .aplayer-lrc:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.aplayer.lyrics-expanded .aplayer-lrc {
+  height: 50vh !important;
+  max-height: 50vh !important;
+  overflow-y: auto !important;
+  padding: 20px;
+}
+
+.aplayer.lyrics-expanded .aplayer-lrc p {
+  margin: 10px 0;
+  line-height: 1.8;
+}

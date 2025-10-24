@@ -126,8 +126,54 @@
             const { index } = this.player.list
             this.activeId = this.player.list.audios[index].id
           })
+          this.initLyricsExpandable()
         },
         methods: {
+          initLyricsExpandable() {
+            let scrollTimer = null
+            let isExpanded = false
+            const container = document.getElementById('aplayer')
+            
+            // Wait for APlayer to render
+            setTimeout(() => {
+              const lrcElement = container.querySelector('.aplayer-lrc')
+              if (!lrcElement) return
+              
+              // Click to toggle expand/collapse
+              lrcElement.addEventListener('click', () => {
+                isExpanded = !isExpanded
+                if (isExpanded) {
+                  container.classList.add('lyrics-expanded')
+                } else {
+                  container.classList.remove('lyrics-expanded')
+                  // Return to current lyrics position when collapsing
+                  this.scrollToCurrentLyric(lrcElement)
+                }
+              })
+              
+              // Handle scroll events in expanded mode
+              lrcElement.addEventListener('scroll', () => {
+                if (!isExpanded) return
+                
+                // Clear existing timer
+                if (scrollTimer) {
+                  clearTimeout(scrollTimer)
+                }
+                
+                // Set new timer to return to current lyric after 3s
+                scrollTimer = setTimeout(() => {
+                  this.scrollToCurrentLyric(lrcElement)
+                }, 3000)
+              })
+            }, 500)
+          },
+          scrollToCurrentLyric(lrcElement) {
+            // Find the current active lyric (has .aplayer-lrc-current class)
+            const currentLyric = lrcElement.querySelector('.aplayer-lrc-current')
+            if (currentLyric) {
+              currentLyric.scrollIntoView({ behavior: 'smooth', block: 'center' })
+            }
+          },
           async getDataSource() {
             try {
               this.loading = true
