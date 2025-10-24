@@ -61,7 +61,7 @@
 /* Expandable lyrics styles */
 .aplayer .aplayer-lrc {
   cursor: pointer;
-  transition: height 0.3s ease, max-height 0.3s ease, background 0.3s ease;
+  transition: height 0.3s ease, max-height 0.3s ease;
 }
 
 .aplayer .aplayer-lrc:hover {
@@ -75,6 +75,7 @@
   background: white;
   z-index: 100;
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+  transition: height 0.3s ease, box-shadow 0.3s ease;
 }
 
 .aplayer.lyrics-expanded .aplayer-lrc {
