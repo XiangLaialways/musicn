@@ -61,18 +61,27 @@
 /* Expandable lyrics styles */
 .aplayer .aplayer-lrc {
   cursor: pointer;
-  transition: height 0.3s ease, max-height 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .aplayer .aplayer-lrc:hover {
   background-color: rgba(0, 0, 0, 0.02);
 }
 
+/* When expanded, the entire aplayer container grows upward to cover song list */
+.aplayer.lyrics-expanded {
+  height: calc(100vh - 20px) !important;
+  background: white;
+  z-index: 100;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+}
+
 .aplayer.lyrics-expanded .aplayer-lrc {
-  height: 50vh !important;
-  max-height: 50vh !important;
+  height: calc(100vh - 166px) !important;
+  max-height: calc(100vh - 166px) !important;
   overflow-y: auto !important;
   padding: 20px;
+  background: white;
 }
 
 .aplayer.lyrics-expanded .aplayer-lrc p {
