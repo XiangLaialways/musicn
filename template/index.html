@@ -141,15 +141,33 @@
               const lrcElement = container.querySelector('.aplayer-lrc')
               if (!lrcElement) return
               
+              // Track mouse position to distinguish click from drag/scroll
+              let mouseDownY = 0
+              let mouseDownTime = 0
+              
+              lrcElement.addEventListener('mousedown', (e) => {
+                mouseDownY = e.clientY
+                mouseDownTime = Date.now()
+              })
+              
               // Click to toggle expand/collapse
-              lrcElement.addEventListener('click', () => {
-                isExpanded = !isExpanded
-                if (isExpanded) {
-                  container.classList.add('lyrics-expanded')
-                } else {
-                  container.classList.remove('lyrics-expanded')
-                  // Return to current lyrics position when collapsing
-                  scrollToCurrentLyric(lrcElement)
+              // Only toggle if mouse hasn't moved much (real click, not scroll gesture)
+              lrcElement.addEventListener('click', (e) => {
+                const mouseUpY = e.clientY
+                const timeDiff = Date.now() - mouseDownTime
+                const moveDiff = Math.abs(mouseUpY - mouseDownY)
+                
+                // Only toggle if it's a quick click without much movement
+                // This prevents toggling during scroll gestures
+                if (moveDiff < 5 && timeDiff < 500) {
+                  isExpanded = !isExpanded
+                  if (isExpanded) {
+                    container.classList.add('lyrics-expanded')
+                  } else {
+                    container.classList.remove('lyrics-expanded')
+                    // Return to current lyrics position when collapsing
+                    scrollToCurrentLyric(lrcElement)
+                  }
                 }
               })
               
