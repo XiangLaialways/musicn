@@ -76,6 +76,7 @@
 }
 
 .aplayer.lyrics-expanded .aplayer-lrc p {
-  margin: 10px 0;
-  line-height: 1.8;
+  margin: 20px 0;
+  line-height: 2.5;
+  font-size: 1.5em;
 }
