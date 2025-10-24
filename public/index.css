@@ -79,7 +79,7 @@
 }
 
 .aplayer.lyrics-expanded .aplayer-lrc {
-  /* Container is 50vh, subtract player controls (~66px) for lyrics area */
+  /* Lyrics area: container (50vh) minus player controls/info section (~66px) */
   height: calc(50vh - 66px) !important;
   max-height: calc(50vh - 66px) !important;
   overflow-y: auto !important;
