@@ -133,6 +133,8 @@
             let scrollTimer = null
             let isExpanded = false
             const container = document.getElementById('aplayer')
+            const APLAYER_RENDER_DELAY_MS = 500 // Wait for APlayer to render DOM
+            const SCROLL_TIMEOUT_MS = 3000 // Return to current lyric after 3s of scroll inactivity
             
             // Wait for APlayer to render
             setTimeout(() => {
@@ -147,7 +149,7 @@
                 } else {
                   container.classList.remove('lyrics-expanded')
                   // Return to current lyrics position when collapsing
-                  this.scrollToCurrentLyric(lrcElement)
+                  scrollToCurrentLyric(lrcElement)
                 }
               })
               
@@ -162,16 +164,17 @@
                 
                 // Set new timer to return to current lyric after 3s
                 scrollTimer = setTimeout(() => {
-                  this.scrollToCurrentLyric(lrcElement)
-                }, 3000)
+                  scrollToCurrentLyric(lrcElement)
+                }, SCROLL_TIMEOUT_MS)
               })
-            }, 500)
-          },
-          scrollToCurrentLyric(lrcElement) {
-            // Find the current active lyric (has .aplayer-lrc-current class)
-            const currentLyric = lrcElement.querySelector('.aplayer-lrc-current')
-            if (currentLyric) {
-              currentLyric.scrollIntoView({ behavior: 'smooth', block: 'center' })
+            }, APLAYER_RENDER_DELAY_MS)
+            
+            // Helper function to scroll to current lyric
+            function scrollToCurrentLyric(lrcElement) {
+              const currentLyric = lrcElement.querySelector('.aplayer-lrc-current')
+              if (currentLyric) {
+                currentLyric.scrollIntoView({ behavior: 'smooth', block: 'center' })
+              }
             }
           },
           async getDataSource() {
