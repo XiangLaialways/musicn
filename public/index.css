@@ -70,8 +70,8 @@
 
 /* When expanded, the entire aplayer container grows upward to cover song list */
 .aplayer.lyrics-expanded {
-  /* Cover almost full viewport, leaving 20px for top padding */
-  height: calc(100vh - 20px) !important;
+  /* Expand to 50% of viewport height */
+  height: 50vh !important;
   background: white;
   z-index: 100;
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
@@ -79,9 +79,9 @@
 }
 
 .aplayer.lyrics-expanded .aplayer-lrc {
-  /* Total height minus player controls (~66px), header (~80px), and padding (20px) = ~166px */
-  height: calc(100vh - 166px) !important;
-  max-height: calc(100vh - 166px) !important;
+  /* Container is 50vh, subtract player controls (~66px) for lyrics area */
+  height: calc(50vh - 66px) !important;
+  max-height: calc(50vh - 66px) !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
   padding: 20px;
