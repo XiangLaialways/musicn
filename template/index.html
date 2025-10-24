@@ -135,21 +135,43 @@
             const container = document.getElementById('aplayer')
             const APLAYER_RENDER_DELAY_MS = 500 // Wait for APlayer to render DOM
             const SCROLL_TIMEOUT_MS = 3000 // Return to current lyric after 3s of scroll inactivity
+            const MAX_CLICK_MOVEMENT_PX = 5 // Maximum mouse movement to consider as click
+            const MAX_CLICK_DURATION_MS = 500 // Maximum time to consider as quick click
             
             // Wait for APlayer to render
             setTimeout(() => {
               const lrcElement = container.querySelector('.aplayer-lrc')
               if (!lrcElement) return
               
+              // Track mouse position to distinguish click from drag/scroll
+              let mouseDownY = 0
+              let mouseDownTime = 0
+              
+              const handleMouseDown = (e) => {
+                mouseDownY = e.clientY
+                mouseDownTime = Date.now()
+              }
+              
+              lrcElement.addEventListener('mousedown', handleMouseDown)
+              
               // Click to toggle expand/collapse
-              lrcElement.addEventListener('click', () => {
-                isExpanded = !isExpanded
-                if (isExpanded) {
-                  container.classList.add('lyrics-expanded')
-                } else {
-                  container.classList.remove('lyrics-expanded')
-                  // Return to current lyrics position when collapsing
-                  scrollToCurrentLyric(lrcElement)
+              // Only toggle if mouse hasn't moved much (real click, not scroll gesture)
+              lrcElement.addEventListener('click', (e) => {
+                const mouseUpY = e.clientY
+                const timeDiff = Date.now() - mouseDownTime
+                const moveDiff = Math.abs(mouseUpY - mouseDownY)
+                
+                // Only toggle if it's a quick click without much movement
+                // This prevents toggling during scroll gestures
+                if (moveDiff < MAX_CLICK_MOVEMENT_PX && timeDiff < MAX_CLICK_DURATION_MS) {
+                  isExpanded = !isExpanded
+                  if (isExpanded) {
+                    container.classList.add('lyrics-expanded')
+                  } else {
+                    container.classList.remove('lyrics-expanded')
+                    // Return to current lyrics position when collapsing
+                    scrollToCurrentLyric(lrcElement)
+                  }
                 }
               })
               

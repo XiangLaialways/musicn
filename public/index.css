@@ -83,8 +83,12 @@
   height: calc(100vh - 166px) !important;
   max-height: calc(100vh - 166px) !important;
   overflow-y: auto !important;
+  overflow-x: hidden !important;
   padding: 20px;
   background: white;
+  /* Ensure scrolling is enabled and smooth */
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .aplayer.lyrics-expanded .aplayer-lrc p {
