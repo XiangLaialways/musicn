@@ -68,11 +68,23 @@
   background-color: rgba(0, 0, 0, 0.02);
 }
 
+/* When expanded, the entire aplayer container grows upward to cover song list */
+.aplayer.lyrics-expanded {
+  /* Cover almost full viewport, leaving 20px for top padding */
+  height: calc(100vh - 20px) !important;
+  background: white;
+  z-index: 100;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+  transition: height 0.3s ease, box-shadow 0.3s ease;
+}
+
 .aplayer.lyrics-expanded .aplayer-lrc {
-  height: 50vh !important;
-  max-height: 50vh !important;
+  /* Total height minus player controls (~66px), header (~80px), and padding (20px) = ~166px */
+  height: calc(100vh - 166px) !important;
+  max-height: calc(100vh - 166px) !important;
   overflow-y: auto !important;
   padding: 20px;
+  background: white;
 }
 
 .aplayer.lyrics-expanded .aplayer-lrc p {
